@@ -66,22 +66,28 @@ function CollectionsGrid({collections}) {
  */
 function CollectionItem({collection, index}) {
   return (
-    <Link
+    <div className="collection-item">
+      <Link
       className="collection-item"
       key={collection.id}
       to={`/collections/${collection.handle}`}
       prefetch="intent"
-    >
-      {collection?.image && (
-        <Image
-          alt={collection.image.altText || collection.title}
-          aspectRatio="1/1"
-          data={collection.image}
-          loading={index < 3 ? 'eager' : undefined}
-        />
-      )}
-      <h5>{collection.title}</h5>
-    </Link>
+      >
+        {collection?.image && (
+          <Image
+            alt={collection.image.altText || collection.title}
+            aspectRatio="1/1"
+            data={collection.image}
+            loading={index < 3 ? 'eager' : undefined}
+          />
+        )}
+        <h5>{collection.title}</h5>
+      </Link>
+      <details>
+        <summary>View Collection</summary>
+        <p>{collection.description}</p>
+      </details>
+    </div>
   );
 }
 
@@ -90,6 +96,7 @@ const COLLECTIONS_QUERY = `#graphql
     id
     title
     handle
+    description
     image {
       id
       url
